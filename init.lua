@@ -127,7 +127,7 @@ minetest.register_node("economy:vending", {
 	groups = {snappy=3},
 	selection_box = svm_cbox,
 	collision_box = svm_cbox,
-	
+	light_source = 10,
 	inventory_image = "economy_vending_inv.png",
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -195,7 +195,7 @@ minetest.register_node("economy:bank", {
 	groups = {snappy=3},
 	selection_box = svm_cbox,
 	collision_box = svm_cbox,
-	
+	light_source = 10,
 	inventory_image = "economy_bank_inv.png",
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -226,7 +226,7 @@ minetest.register_node("economy:playervendor", {
 	tiles = {"economy_playervendor.png"},
 	selection_box = svm_cbox,
 	collision_box = svm_cbox,
-	
+	light_source = 10,
 	inventory_image = "economy_playervendor_inv.png",
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -559,7 +559,7 @@ economy.formspecs={
 			if page<1 then page=1 end
 			if page>totalPages then page=totalPages end
 			
-			local formspec="size[8,8]button[1,6.5;3,1;sell;"..S("Add items to sell").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name()))..". "..S("This machine sells:").."]"
+			local formspec="size[8,8]button[1,6.5;3,1;sell;"..S("Add items to sell").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("This machine sells:").."]"
 			
 			if #idsp==0 then
 				formspec=formspec.."label[0,2;"..S("This machine has nothing to sell at the moment.").."]"
@@ -762,7 +762,7 @@ economy.formspecs={
 			if page<1 then page=1 end
 			if page>totalPages then page=totalPages end
 			
-			local formspec="size[8,8]button[1,6.5;3,1;sell;"..S("Add items to sell").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name()))..". "..S("Machine of @1",meta:get_string("owner")).."]label[0,0.5;"..S("This machine sells:").."]"
+			local formspec="size[8,8]button[1,6.5;3,1;sell;"..S("Add items to sell").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("Machine of @1",meta:get_string("owner")).."]label[0,0.5;"..S("This machine sells:").."]"
 			
 			if #idsp==0 then
 				formspec=formspec.."label[0,2;"..S("This machine has nothing to sell at the moment.").."]"
@@ -912,7 +912,7 @@ economy.formspecs={
 		
 		minetest.show_formspec(economy.pname(player), "economy_bank_", [[
 			size[8,8]
-			label[0,0;]]..S("Your balance: @1ŧ",economy.moneyof(economy.pname(player)))..[[ŧ]
+			label[0,0;]]..S("Your balance: @1ŧ",economy.moneyof(economy.pname(player)))..[[]
 			label[1,0.5;--- ]]..S("Money transfer")..[[ ---]
 			field[1,1.5;4,1;sum;]]..S("Transfer sum:")..";"..(trans_sum or "100")..[[]field[1,2.5;4,1;plr;]]..S("Player:")..";"..(trans_player or "???").."]button[1,3.5;2,1;trans;"..S("Transfer!").."]"
 			..(trans_complete and "label[0,3;"..S("Transfer successful. @1ŧ have been transferred to @2.", trans_sum, trans_player).."]" or "")..(trans_fail and "label[0,3;"..S("Transfer failed. Please check all values.").."]" or "")..
