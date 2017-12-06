@@ -764,7 +764,7 @@ economy.formspecs={
 			if page<1 then page=1 end
 			if page>totalPages then page=totalPages end
 			
-			local formspec="size[8,8]label[0,7.5;"..S("Click item icons to purchase items.").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("\nMachine of @1",meta:get_string("owner")).." sells:")"]"
+			local formspec="size[8,8]label[0,7.5;"..S("Click item icons to purchase items.").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("\nMachine of @1",meta:get_string("owner").." sells:")"]"
 			..default.gui_bg..default.gui_bg_img.."]"
 			if #idsp==0 then
 				formspec=formspec.."label[0,2;"..S("This machine has nothing to sell at the moment.").."]"
@@ -919,7 +919,7 @@ economy.formspecs={
 			label[1,0.5;--- ]]..S("Money transfer")..[[ ---]
 			field[1,1.5;4,1;sum;]]..S("Transfer sum:")..";"..(trans_sum or "100")..[[]field[1,2.5;4,1;plr;]]..S("Player:")..";"..(trans_player or "???").."]button[1,3.5;2,1;trans;"..S("Transfer!").."]"
 			..(trans_complete and "label[0,3;"..S("Transfer successful. @1ŧ have been transferred to @2.", trans_sum, trans_player).."]" or "")..(trans_fail and "label[0,3;"..S("Transfer failed. Please check all values.").."]" or "")..
-			"label[1,4.5;--- "..S("Transaction history (latest entry at bottom)").." ---]"..
+			"label[1,4.5;--- "..S("Transaction history (latest entry at bottom)").." ---]"..default.gui_bg..default.gui_bg_img..
 			log_form
 	)
 		end,
