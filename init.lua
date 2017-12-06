@@ -29,8 +29,8 @@ economy.itemprices_pr={
 	["uw:glowstone"]=300,
 	["homedecor:piano"]=3773,
 	["moreores:mithril_block"]=4444,
-	["default:nyancat_rainbow"]=10000,
-	["default:nyancat"]=50000,
+	["nyancat:nyancat_rainbow"]=10000,
+	["nyancat:nyancat"]=50000,
 	["default:apple"]=2,
 	["farming:wheat"]=3,
 	--["default:dirt"]=2,
@@ -347,7 +347,7 @@ economy.formspecs={
 				label[0,0;]]..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name()))..[[]
 				button[1,1;3,1;buy;]]..S("Buy Items/Price List")..[[]
 				list[nodemeta:]]..pos.x..","..pos.y..","..pos.z..[[;sell;2,2;1,1;]
-				]]..(cantsell and "label[1,3;"..S("You can't sell this item. Please see price list.").."]" or "label[1,3;"..S("Put items here to sell them.").."]")..[[
+				]]..(cantsell and "label[1,3;"..S("You can't sell this item. Please see price list.").."]" or "label[1,3;"..S("Put items here to sell them.").."]")..default.gui_bg..default.gui_bg_img..[[
 				list[current_player;main;0,4;8,4;]
 				]])
 		end,
@@ -380,7 +380,7 @@ economy.formspecs={
 			if page>totalPages then page=totalPages end
 			
 			local formspec="size[8,8]button[1,6.5;3,1;sell;"..S("Sell items").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).."]"
-			
+			..default.gui_bg..default.gui_bg_img.."]"
 			if page~=1 then formspec=formspec.."button[5,6.5;1,1;page_"..(page-1)..";<<]" end
 			if page~=totalPages then formspec=formspec.."button[6,6.5;1,1;page_"..(page+1)..";>>]" end
 			
@@ -463,7 +463,8 @@ economy.formspecs={
 			end
 			
 			minetest.show_formspec(economy.pname(player), "economy_vendingbuyitem_"..minetest.pos_to_string(pos).."_"..iname, 
-				"size[8,8]item_image[5,1;2,2;"..iname.."]"..
+				"size[8,8]item_image[5,2;2,2;"..iname.."]"..
+				default.gui_bg..default.gui_bg_img.."]"..
 				"label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(economy.pname(player))).."]"..
 				"label[0,1;"..S("You are buying @1",economy.itemdesc_ext(iname)).."]"..
 				"label[0,2;"..S("Price per item: @1 ŧ",buyprice).."]"..
@@ -559,8 +560,8 @@ economy.formspecs={
 			if page<1 then page=1 end
 			if page>totalPages then page=totalPages end
 			
-			local formspec="size[8,8]button[1,6.5;3,1;sell;"..S("Add items to sell").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("This machine sells:").."]"
-			
+			local formspec="size[8,8]button[1,6.5;3,1;sell;"..S("Add items to sell").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("\nThis machine sells:").."]"
+			..default.gui_bg..default.gui_bg_img.."]"
 			if #idsp==0 then
 				formspec=formspec.."label[0,2;"..S("This machine has nothing to sell at the moment.").."]"
 			end
@@ -577,11 +578,11 @@ economy.formspecs={
 						formspec=formspec.."item_image_button[0,"..(((i-1)%10)*0.5+1)..";0.6,0.6;"..idsp[i].name..";buy_"..idsp[i].name..";]"..
 						"label[0.5,"..(((i-1)%10)*0.5+1)..";("..idsp[i].count..") "..economy.itemdesc(idsp[i].name).."]"..
 						"label[4,"..(((i-1)%10)*0.5+1)..";"..S("Price: @1ŧ", idsp[i].price).."]"..
-						"button[6,"..(((i-1)%10)*0.5+1)..";3,0.6;chpr_"..idsp[i].name..";"..S("Change").."]"
+						"button[6,"..(((i-1)%10)*0.5+1)..";2,0.6;chpr_"..idsp[i].name..";"..S("Change").."]"
 					end
 				end
 			end
-			formspec=formspec.."label[0,7.5;"..S("Click th symbol to take back items").."]"
+			formspec=formspec.."label[0,7.5;"..S("Click item icons to retrieve items.").."]"
 			
 			minetest.show_formspec(economy.pname(player), "economy_pvendingown_"..minetest.pos_to_string(pos), formspec)
 		end,
@@ -618,7 +619,7 @@ economy.formspecs={
 			local price=meta:get_int("ip_"..iname)
 			
 			minetest.show_formspec(economy.pname(player), "economy_pvendingitemchpr_"..minetest.pos_to_string(pos).."_"..iname, 
-				"field[newprice;"..S("New price for @1:",economy.itemdesc(iname))..";"..(price or "").."]"
+				default.gui_bg..default.gui_bg_img.."field[newprice;"..S("New price for @1:",economy.itemdesc(iname))..";"..(price or "").."]"
 			)
 		end,
 		hdlr=function(player, restformname, fields)
@@ -659,7 +660,8 @@ economy.formspecs={
 			end
 			
 			minetest.show_formspec(economy.pname(player), "economy_pvendingitemtakeout_"..minetest.pos_to_string(pos).."_"..iname, 
-				"size[8,8]item_image[5,1;2,2;"..iname.."]"..
+				"size[8,8]item_image[5,2;2,2;"..iname.."]"..
+				default.gui_bg..default.gui_bg_img..
 				"label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(economy.pname(player))).."]"..
 				"label[0,1;"..S("You are taking @1 out of the machine.",economy.itemdesc_ext(iname)).."]"..
 				"label[0,3;"..S("There are @1 items available.",available).."]"..
@@ -720,7 +722,7 @@ economy.formspecs={
 				list[nodemeta:]]..pos.x..","..pos.y..","..pos.z..[[;sell;2,2;1,1;]
 				label[1,3;]]..S("Put items here to offer them for sale.").."]"..[[
 				list[current_player;main;0,4;8,4;]
-			]])
+			]]..default.gui_bg..default.gui_bg_img)
 		end,
 		hdlr=function(player, restformname, fields)
 			if fields.buy then
@@ -762,8 +764,8 @@ economy.formspecs={
 			if page<1 then page=1 end
 			if page>totalPages then page=totalPages end
 			
-			local formspec="size[8,8]button[1,6.5;3,1;sell;"..S("Add items to sell").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("Machine of @1",meta:get_string("owner")).."]label[0,0.5;"..S("This machine sells:").."]"
-			
+			local formspec="size[8,8]label[0,7.5;"..S("Click item icons to purchase items.").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("\nMachine of @1",meta:get_string("owner")).." sells:")"]"
+			..default.gui_bg..default.gui_bg_img.."]"
 			if #idsp==0 then
 				formspec=formspec.."label[0,2;"..S("This machine has nothing to sell at the moment.").."]"
 			end
@@ -831,7 +833,8 @@ economy.formspecs={
 			end
 			
 			minetest.show_formspec(economy.pname(player), "economy_pvendingbuyitem_"..minetest.pos_to_string(pos).."_"..iname, 
-			"size[8,8]item_image[5,1;2,2;"..iname.."]"..
+			"size[8,8]item_image[5,2;2,2;"..iname.."]"..
+			defualt.gui_bg..default.gui_bg_img..
 			"label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(economy.pname(player))).."]"..
 			"label[0,1;"..S("You are buying @1",economy.itemdesc_ext(iname)).."]"..
 			"label[0,2;"..S("Price per item: @1 ŧ",buyprice).."]"..
