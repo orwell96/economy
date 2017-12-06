@@ -834,7 +834,7 @@ economy.formspecs={
 			
 			minetest.show_formspec(economy.pname(player), "economy_pvendingbuyitem_"..minetest.pos_to_string(pos).."_"..iname, 
 			"size[8,8]item_image[5,2;2,2;"..iname.."]"..
-			defualt.gui_bg..default.gui_bg_img..
+			default.gui_bg..default.gui_bg_img..
 			"label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(economy.pname(player))).."]"..
 			"label[0,1;"..S("You are buying @1",economy.itemdesc_ext(iname)).."]"..
 			"label[0,2;"..S("Price per item: @1 ŧ",buyprice).."]"..
