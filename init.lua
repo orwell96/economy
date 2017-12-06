@@ -764,7 +764,7 @@ economy.formspecs={
 			if page<1 then page=1 end
 			if page>totalPages then page=totalPages end
 			
-			local formspec="size[8,8]label[0,7.5;"..S("Click item icons to purchase items.").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("\nMachine of @1",meta:get_string("owner").." sells:")"]"
+			local formspec="size[8,8]label[0,7.5;"..S("Click item icons to purchase items.").."]label[0,0;"..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name())).." "..S("\nMachine of @1",meta:get_string("owner").." sells:").."]"
 			..default.gui_bg..default.gui_bg_img.."]"
 			if #idsp==0 then
 				formspec=formspec.."label[0,2;"..S("This machine has nothing to sell at the moment.").."]"
