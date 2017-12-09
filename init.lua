@@ -745,7 +745,7 @@ economy.formspecs={
 				label[0,0;]]..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name()))..[[]
 				button[1,1;3,1;buy;]]..S("Back")..[[]
 				list[nodemeta:]]..pos.x..","..pos.y..","..pos.z..[[;sell;2,2;1,1;]
-				]]..(cantadd and "label[1,3;"..S("This vending machines is full.").."]" or "label[1,3;"..S("Put items here to offer them for sale.").."]"..[[
+				]]..(cantadd and "label[1,3;"..S("This vending machines is full.").."]" or "label[1,3;"..S("Put items here to offer them for sale.").."]")..[[
 				list[current_player;main;0,4;8,4;]
 			]])
 		end,
