@@ -12,6 +12,10 @@ end
 
 economy={}
 
+--Limit stacks players may hold in machines. 10 = one page, 20 = two pages, etc.
+--Set machinecapacity=0 for unlimited.
+economy.machinecapacity=30
+
 economy.itemprices_pr={
 	["default:wood"]=1,
 	["default:tree"]=4,
@@ -254,7 +258,30 @@ minetest.register_node("economy:playervendor", {
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		if listname=="sell" then
-			return stack:get_count()
+			local meta=minetest.get_meta(pos)
+			local stacklist={}
+			local nametable={}
+			local metatable=meta:to_table().fields
+			for i,j in pairs(metatable) do
+				local category, item=string.match(i, "^i([cp])_(.+)$")
+				if category and item then
+					if not nametable[item] then
+						nametable[item]={}
+					end
+					nametable[item][category]=meta:get_int("i"..category.."_"..item)
+				end
+			end
+			for i,j in pairs(nametable) do
+				if j.p and j.c and j.c>0 then
+					table.insert(stacklist,1,{name=i, price=j.p, count=j.c})
+				end
+			end
+			if #stacklist<economy.machinecapacity or economy.machinecapacity==0 then
+				return stack:get_count()
+			else
+				economy.formspecs.pvendinginput.open(player, pos, true)
+				return 0
+			end
 		end
 		return 0
 	end,
@@ -712,13 +739,13 @@ economy.formspecs={
 		end
 	},
 	pvendinginput={
-		open=function(player, pos)
+		open=function(player, pos, cantadd)
 			minetest.show_formspec(economy.pname(player), "economy_pvendinginput_"..minetest.pos_to_string(pos), [[
 				size[8,8]
 				label[0,0;]]..S("Your balance: @1ŧ",economy.moneyof(player:get_player_name()))..[[]
 				button[1,1;3,1;buy;]]..S("Back")..[[]
 				list[nodemeta:]]..pos.x..","..pos.y..","..pos.z..[[;sell;2,2;1,1;]
-				label[1,3;]]..S("Put items here to offer them for sale.").."]"..[[
+				]]..(cantadd and "label[1,3;"..S("This vending machines is full.").."]" or "label[1,3;"..S("Put items here to offer them for sale.").."]"..[[
 				list[current_player;main;0,4;8,4;]
 			]])
 		end,
